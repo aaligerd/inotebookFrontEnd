@@ -1,17 +1,16 @@
 import React, { useContext } from 'react'
 import noteContext from '../context/notecontext';
 
+
 function Note(props) {
-    const a=useContext(noteContext);
-    let {noteDelete} = a ;
+    const a = useContext(noteContext);
+    let { noteDelete } = a;
+    let {title,description,id,updateExistingNote,editHandle}=props;
 
     const handleDelete = () => {
-        console.log(props.id);
         noteDelete(props.id);
     }
-    const handleEdit = () => {
-        console.log(props.id);
-    }
+    
 
     const buttonStyle = {
         display: "contents"
@@ -20,15 +19,18 @@ function Note(props) {
 
     return (
         <div>
+            {/* <Editnote id={props.id} /> */}
             <div className="card text-center">
                 <div className="card-header">
-                    {props.title}
+                    {title}
                 </div>
                 <div className="card-body">
-                    <p className="card-text text-start" style={{ fontSize: '19px' }}>{props.description}</p>
+                    <p className="card-text text-start" style={{ fontSize: '19px' }}>{description}</p>
                     <div className="d-flex">
-                        <button style={buttonStyle} onClick={props.updateExistingNote(a)}><i className="fa fa-pencil-square mx-2" aria-hidden="true"></i></button>
+                        {/*update method*/}
+                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" style={buttonStyle} onClick={()=>{editHandle(id)}}><i className="fa fa-pencil-square mx-2" aria-hidden="true"></i></button>
                         <button style={buttonStyle} onClick={handleDelete}><i className="fa fa-trash mx-2" aria-hidden="true"></i></button>
+                        
                     </div>
                 </div>
                 <div className="card-footer text-muted">
