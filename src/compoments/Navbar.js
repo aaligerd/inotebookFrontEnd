@@ -1,8 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import userEvent from '@testing-library/user-event';
+import {React,useContext} from 'react';
+import { Link } from 'react-router-dom';
+import authContext from '../context/authcontext';
+
 
 function Navbar() {
-    
+    const actxt=useContext(authContext);
+    let {userstate}=actxt;
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,6 +28,14 @@ function Navbar() {
                 </button>
                 </div>
                 </div>
+                {userstate.login?`hey ${userstate.userName}`:
+                <div>
+                    <Link className="btn btn-primary mx-1" to="/login">Login</Link>
+                    <Link className="btn btn-primary mx-1" to="/signup">Signup</Link>
+                </div>}
+                
+                
+                
                 
             </div>
         </nav>

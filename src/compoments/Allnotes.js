@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import noteContext from '../context/notecontext'
-
+import authContext from '../context/authcontext'
 import Note from './Note'
 
 function Mynotes(props) {
 
   const n = useContext(noteContext);
-  const [enote, setNote] = useState({eid:"", etitle: "htag", edescription: "htag", etag: "htag" })
+  const [enote, setNote] = useState({eid:"", etitle: "htag", edescription: "htag", etag: "htag" });
+  const A=useContext(authContext);
+  let {userstate}=A;
   let { notes, fetchNotes,updateNoteById } = n;
   useEffect(() => {
-    fetchNotes();
+    console.log("authtoken: "+userstate.authToken);
+    fetchNotes(userstate.authToken);
     console.log("called fetch")
     // eslint-disable-next-line
   }, [])
 
-  const updateExistingNote = (id) => {
-
-  }
   const handleChange = (e) => {
     setNote({ ...enote, [e.target.name]: e.target.value });
 
@@ -75,7 +75,7 @@ function Mynotes(props) {
 
         {notes.length ? notes.map((note) => {
           return <div key={note._id} className="col-sm-12 col-md-6  col-lg-4 col-xl-3 my-2">
-            <Note updateExistingNote={updateExistingNote} editHandle={handleEdite} id={note._id} title={note.title} description={note.description} date={new Date(note.date).toLocaleString()} tag={note.tag} />
+            <Note editHandle={handleEdite} id={note._id} title={note.title} description={note.description} date={new Date(note.date).toLocaleString()} tag={note.tag} />
 
           </div>
         }) : "No Notes"}

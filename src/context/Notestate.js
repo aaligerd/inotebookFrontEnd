@@ -1,16 +1,23 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+// import {authContext as UserAuth} from './authcontext'
 import NoteContext from './notecontext'
 
 const NoteState = (props) => {
     const mainurl="http://localhost:2020/api/note";
     const initialnotes = [];
     const [notes, setNotes] = useState(initialnotes);
+    // const useauthcontext=useContext(UserAuth);
+
+    // let {userstate}=useauthcontext;
+
+    
 
     //fetch notes from db athenticate by token
     const fetchNotes = async () => {
         updateNoteState();
 
     }
+    
     //add notes in db 
     const addNote = async (addingnote) => {
         let noteObject = {

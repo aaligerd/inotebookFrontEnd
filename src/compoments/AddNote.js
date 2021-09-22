@@ -23,7 +23,7 @@ function AddNote() {
     return (
         <div className="my-2">
             <h2 className="d-flex my-2" style={{fontSize:"30px",fontWeight:"600"}}> Add Note </h2>
-            <form>
+            <form onSubmit={noteSubmit}>
                 <div className="mb-3">                    
                     <input type="text" onChange={handleChange} className="form-control " id="title" name="title" placeholder="My Note Title" required />
                 </div>
@@ -33,7 +33,7 @@ function AddNote() {
                 <div className="mb-3">                    
                     <input type="text" onChange={handleChange} className="form-control" id="tag" name="tag" placeholder="My Note Tag" required />
                 </div>
-                <span className="btn btn-dark" onClick={noteSubmit}>Add</span>
+                <span type="submit" className="btn btn-dark" onClick={noteSubmit}>Add</span>
             </form>
         </div>
     )
