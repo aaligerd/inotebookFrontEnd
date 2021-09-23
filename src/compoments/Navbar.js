@@ -1,17 +1,22 @@
 import userEvent from '@testing-library/user-event';
 import {React,useContext} from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useHistory} from 'react-router-dom';
 import authContext from '../context/authcontext';
 
 
 function Navbar() {
     const actxt=useContext(authContext);
-    let {userstate}=actxt;
+    let history=useHistory();
+    let {userstate,userLogout}=actxt;
+    const handleLogout=async()=>{
+        await userLogout();
+        history.push('/login');
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/">Navbar</Link>
+                <Link className="navbar-brand" to="/">iNotebook</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -21,14 +26,12 @@ function Navbar() {
                         <Link className="nav-link" to="/about">About</Link>
                         <Link className="nav-link" to="/contact">Contact</Link>
                     </div>
-                    <div className="d-flex">
-                    <button style={{display:"contents"}}>
-                        <span ><i className="fa fa-sun-o mx-2" style={{display:'flex'}}></i></span>
-                        <span ><i className="fa fa-moon-o mx-2" style={{display:'flex'}}></i></span>               
-                </button>
                 </div>
-                </div>
-                {userstate.login?`hey ${userstate.userName}`:
+                {userstate.login?
+                <div>
+                <button className="btn btn-primary mx-1" onClick={handleLogout}>Logout</button>
+                
+            </div>:
                 <div>
                     <Link className="btn btn-primary mx-1" to="/login">Login</Link>
                     <Link className="btn btn-primary mx-1" to="/signup">Signup</Link>

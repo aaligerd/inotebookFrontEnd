@@ -11,9 +11,7 @@ function Mynotes(props) {
   let {userstate}=A;
   let { notes, fetchNotes,updateNoteById } = n;
   useEffect(() => {
-    console.log("authtoken: "+userstate.authToken);
-    fetchNotes(userstate.authToken);
-    console.log("called fetch")
+    fetchNotes();
     // eslint-disable-next-line
   }, [])
 

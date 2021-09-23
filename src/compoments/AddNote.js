@@ -1,14 +1,18 @@
 import React,{useContext,useState} from 'react'
+import authContext from '../context/authcontext';
 import noteContext from '../context/notecontext';
+
+
 
 function AddNote() {
     const a=useContext(noteContext);
+    const b=useContext(authContext);    
     const [note, setNote] = useState({title:"",description:"",tag:""})
     const handleChange=(e)=>{
-        setNote({...note,[e.target.name]:e.target.value});
-        
+        setNote({...note,[e.target.name]:e.target.value});                
     }
     let {addNote} = a;
+    let {userstate}=b;
     const noteSubmit=()=>{
         addNote(note);
         document.getElementById('title').value="";
@@ -33,7 +37,7 @@ function AddNote() {
                 <div className="mb-3">                    
                     <input type="text" onChange={handleChange} className="form-control" id="tag" name="tag" placeholder="My Note Tag" required />
                 </div>
-                <span type="submit" className="btn btn-dark" onClick={noteSubmit}>Add</span>
+                <button type="submit" disabled={!userstate.login} className="btn btn-dark" onClick={noteSubmit}>Add</button>
             </form>
         </div>
     )

@@ -1,14 +1,14 @@
 import { useContext, useState } from 'react'
-// import {authContext as UserAuth} from './authcontext'
+import authContext  from './authcontext'
 import NoteContext from './notecontext'
 
 const NoteState = (props) => {
     const mainurl="http://localhost:2020/api/note";
     const initialnotes = [];
     const [notes, setNotes] = useState(initialnotes);
-    // const useauthcontext=useContext(UserAuth);
+    const useauthcontext=useContext(authContext);
 
-    // let {userstate}=useauthcontext;
+    let {userstate}=useauthcontext;
 
     
 
@@ -30,7 +30,7 @@ const NoteState = (props) => {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
-                "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE0MjM3ZDI0ZTJkYTljZTcwZjlhNzYxIn0sImlhdCI6MTYzMTgyMzk1NH0.XvIZz6OW4xoMO2O-mjcX5O4fVe4MWwUpRCeVzuBTQoY"
+                "authToken": userstate.authToken
 
             },
             body: JSON.stringify(noteObject)
@@ -38,12 +38,13 @@ const NoteState = (props) => {
         updateNoteState();
     }
     const updateNoteState = async () => {
-        const url = `${mainurl}/fetchnote`;
+        if(userstate.login){
+            const url = `${mainurl}/fetchnote`;
         const noteFechedRaw = await fetch(url, {
             method: 'POST',
             headers: {
                 "Content-type": "application/json",
-                "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE0MjM3ZDI0ZTJkYTljZTcwZjlhNzYxIn0sImlhdCI6MTYzMTgyMzk1NH0.XvIZz6OW4xoMO2O-mjcX5O4fVe4MWwUpRCeVzuBTQoY"
+                "authToken": userstate.authToken
             }
         });
         if (!noteFechedRaw) {
@@ -53,6 +54,10 @@ const NoteState = (props) => {
 
             setNotes(noteFetch)
         }
+        }else{
+            setNotes(initialnotes)
+        }
+        
     }
 
     //delete note from db
@@ -61,7 +66,7 @@ const NoteState = (props) => {
         const deleteresponse = await fetch(url, {
             method: "DELETE",
             headers: {
-                "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE0MjM3ZDI0ZTJkYTljZTcwZjlhNzYxIn0sImlhdCI6MTYzMTgyMzk1NH0.XvIZz6OW4xoMO2O-mjcX5O4fVe4MWwUpRCeVzuBTQoY"
+                "authToken": userstate.authToken
             }
         });
         updateNoteState();
@@ -79,7 +84,7 @@ const NoteState = (props) => {
             method: "PUT",
             headers: {
                 "Content-type": "application/json",
-                "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE0MjM3ZDI0ZTJkYTljZTcwZjlhNzYxIn0sImlhdCI6MTYzMTgyMzk1NH0.XvIZz6OW4xoMO2O-mjcX5O4fVe4MWwUpRCeVzuBTQoY",
+                "authToken": userstate.authToken
             },
             body: JSON.stringify(eNoteObjects)
         });
@@ -87,7 +92,7 @@ const NoteState = (props) => {
 
     }
     return (
-        <NoteContext.Provider value={{ notes, fetchNotes, addNote, noteDelete, updateNoteById }}>
+        <NoteContext.Provider value={{ notes, fetchNotes, addNote, noteDelete, updateNoteById,updateNoteState }}>
             {props.children}
         </NoteContext.Provider>)
 

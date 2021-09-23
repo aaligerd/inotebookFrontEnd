@@ -10,22 +10,24 @@ import Signup from './compoments/Signup';
 
 function App() {
   return (
-    <NoteState>
-      <Authstate>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Switch>
-            <Route exact path="/"><Home/></Route>
-            <Route exact path="/about"><About /></Route>
-            <Route exact path="/contact"><Contact /></Route>
-            <Route exact path="/login"><Login/></Route>
-            <Route exact path="/signup"><Signup/></Route>
-          </Switch>
-        </div>
-      </Router>
-      </Authstate>
-    </NoteState>
+
+    <Authstate>
+      <NoteState>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <Switch>
+              <Route exact path="/"><Home /></Route>
+              <Route exact path="/about"><About /></Route>
+              <Route exact path="/contact"><Contact /></Route>
+              <Route exact path="/login"><Login /></Route>
+              <Route exact path="/signup"><Signup /></Route>
+            </Switch>
+          </div>
+        </Router>
+      </NoteState>
+    </Authstate>
+
   );
 }
 
